@@ -11,7 +11,7 @@ import librosa
 import numpy as np
 import soundfile as sf
 import torch
-import torch_directml
+# import torch_directml
 import uvicorn
 from AR.models.t2s_lightning_module import Text2SemanticLightningModule
 from fastapi import FastAPI, HTTPException, Request
@@ -46,13 +46,14 @@ if(torch.cuda.is_available()):
     print("设备名称:",torch.cuda.get_device_name(0))
     device = "cuda"
 else:
-    if(torch_directml.is_available()==False):
-        device = "cpu"
-        print("在本机没有发现可以用于加速的显卡，使用CPU进行推理运算。")
-    else:
-        device = torch_directml.device(0)
-        print("DirectML可用，将使用DirectML进行推理加速。")
-        print("设备名称:",torch_directml.device_name(0))
+    device = "cpu"
+    # if(torch_directml.is_available()==False):
+    #     device = "cpu"
+    #     print("在本机没有发现可以用于加速的显卡，使用CPU进行推理运算。")
+    # else:
+    #     device = torch_directml.device(0)
+    #     print("DirectML可用，将使用DirectML进行推理加速。")
+    #     print("设备名称:",torch_directml.device_name(0))
 # -----------------------
 
 cnhubert.cnhubert_base_path = cnhubert_path
@@ -294,6 +295,8 @@ def handle(command,  text, text_language='zh'):
     elif command == "/exit":
         os.kill(os.getpid(), signal.SIGTERM)
         exit(0)
+    elif command != "tts":
+        return 'false'
 
     refer_wav_path, prompt_text, prompt_language = (
             default_refer_path,
