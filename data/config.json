@@ -1,0 +1,13 @@
+{
+    "cnhubert_path":"data/models/chinese-hubert-base",
+    "bert_path":"data/models/chinese-roberta-wwm-ext-large",
+    "sovits_path":"data/models/huahuo_e100_s1100.pth",
+    "gpt_path":"data/models/huahuo-e100.ckpt",
+    "default_refer_path":"data/models/000.wav",
+    "default_refer_text":"哎呀真是的，我又不会真的对她做什么。",
+    "default_refer_language":"zh",
+    "is_half":false,
+    "host":"0.0.0.0",
+    "port":6006,
+    "workers":1
+}

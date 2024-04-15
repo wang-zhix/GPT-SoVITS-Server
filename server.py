@@ -26,7 +26,7 @@ from text.cleaner import clean_text
 import json
 
 # 增加一个读取配置文件的功能
-with open("config.json", "r", encoding="utf-8") as f:
+with open("data/config.json", "r", encoding="utf-8") as f:
     config = json.load(f)
     cnhubert_path = config["cnhubert_path"]
     bert_path = config["bert_path"]
@@ -36,6 +36,10 @@ with open("config.json", "r", encoding="utf-8") as f:
     default_refer_text = config["default_refer_text"]
     default_refer_language = config["default_refer_language"]
     is_half = config["is_half"]
+    host = config["host"]
+    port = config["port"]
+    workers = config["workers"]
+
 # 自动判断环境是否支持CUDA和DirectML
 if(torch.cuda.is_available()):
     print("CUDA可用，将使用CUDA进行推理加速。")
@@ -50,22 +54,6 @@ else:
         print("DirectML可用，将使用DirectML进行推理加速。")
         print("设备名称:",torch_directml.device_name(0))
 # -----------------------
-
-# 如果要增加更多的参数选项，在这里设定
-parser = argparse.ArgumentParser(description="GPT-SoVITS-SERVER") 
-# parser.add_argument("-t", "--text", type=str, default='请输入文字，测试合成效果', help=f'.\runtime\python.exe .\api-ben2.py -t "输入要合成的文字"')
-# parser.add_argument("-f", "--huashu", type=str, default='', help=f'.\runtime\python.exe .\app.py -f ./huahsu.json')
-parser.add_argument("-drp", "--default_refer_path", type=str, default="", help="1/2")
-parser.add_argument("-drt", "--default_refer_text", type=str, default="", help="1/2")
-
-parser.add_argument("-p", "--port", type=int, default='8080', help="default: 9880")
-parser.add_argument("-a", "--bind_addr", type=str, default="127.0.0.1", help="default: 127.0.0.1")
-
-args = parser.parse_args()
-
-if args.default_refer_path and args.default_refer_text:
-    default_refer_path = args.default_refer_path
-    default_refer_text = args.default_refer_text
 
 cnhubert.cnhubert_base_path = cnhubert_path
 tokenizer = AutoTokenizer.from_pretrained(bert_path)
@@ -342,4 +330,4 @@ async def tts_endpoint(command: str = None,text: str = None, ):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app ,   host='0.0.0.0', port=8080, workers=1)
+    uvicorn.run(app, host=host, port=port, workers=workers)
