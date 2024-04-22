@@ -1,0 +1,43 @@
+{
+    "version": "1.0.1",
+    "gpt_path": "huahuo-e100.ckpt",
+    "sovits_path": "huahuo_e100_s1100.pth",
+    "简介": "这是一个配置文件适用于https://github.com/X-T-E-R/TTS-for-GPT-soVITS，是一个简单好用的前后端项目",
+    "emotion_list": {
+        "default": {
+            "ref_wav_path": "refer_audio\\亲爱的，何必这么认真呢？你不是玩得很开心吗——至少我很开心呀。.wav",
+            "prompt_text": "亲爱的，何必这么认真呢？你不是玩得很开心吗——至少我很开心呀。",
+            "prompt_language": "中文"
+        },
+        "平常的": {
+            "ref_wav_path": "refer_audio\\…真是的，我又不会真的对她做什么。.wav",
+            "prompt_text": "哎呀真是的，我又不会真的对她做什么。",
+            "prompt_language": "中文"
+        },
+        "慢速病娇": {
+            "ref_wav_path": "refer_audio\\忆者…你觉得你能安然离开？.wav",
+            "prompt_text": "忆者…你觉得你能安然离开？",
+            "prompt_language": "中文"
+        },
+        "傻白甜": {
+            "ref_wav_path": "refer_audio\\怎么不能呀？那三个小剧场，可是每个都出现了花火大人的尸体哦。.wav",
+            "prompt_text": "怎么不能呀？那三个小剧场，可是每个都出现了花火大人的尸体哦。",
+            "prompt_language": "中文"
+        },
+        "平静的": {
+            "ref_wav_path": "refer_audio\\我只是想问问——事到如今，家族还不打算出手吗？你那可怜的妹妹已经牺牲了哦？.wav",
+            "prompt_text": "我只是想问问——事到如今，家族还不打算出手吗？你那可怜的妹妹已经牺牲了哦？",
+            "prompt_language": "中文"
+        },
+        "疯批": {
+            "ref_wav_path": "refer_audio\\花火，伪装成了花火的尸体。.wav",
+            "prompt_text": "花火，伪装成了花火的尸体。",
+            "prompt_language": "中文"
+        },
+        "聊天": {
+            "ref_wav_path": "refer_audio\\要是你万策尽了，记得联系我哦。我这个人很重视情谊。.wav",
+            "prompt_text": "要是你万策尽了，记得联系我哦。我这个人很重视情谊。",
+            "prompt_language": "中文"
+        }
+    }
+}

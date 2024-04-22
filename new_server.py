@@ -7,6 +7,11 @@ tts_infer = TTSInfer()
 
 app = FastAPI()
 
+# @app.post("/")
+# async def tts_endpoint(request: Request):
+#     json_post_raw = await request.json()
+#     return handle( json_post_raw.get("command"),   json_post_raw.get("text"),)
+
 @app.get("/")
 async def tts_endpoint(command: str = None,text: str = None, ):
     print(command , text )

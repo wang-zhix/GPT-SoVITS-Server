@@ -1,12 +1,22 @@
 {
-    "cnhubert_path":"data/models/chinese-hubert-base",
-    "bert_path":"data/models/chinese-roberta-wwm-ext-large",
-    "sovits_path":"data/models/huahuo_e100_s1100.pth",
-    "gpt_path":"data/models/huahuo-e100.ckpt",
-    "default_refer_path":"data/models/000.wav",
-    "default_refer_text":"哎呀真是的，我又不会真的对她做什么。",
-    "is_half":false,
-    "host":"0.0.0.0",
-    "port":6006,
-    "workers":1
+    "base":{
+        "cnhubert_path":"data/chinese-hubert-base",
+        "bert_path":"data/chinese-roberta-wwm-ext-large",
+        "use_model":"linghua",
+        "host":"0.0.0.0",
+        "port":6006,
+        "workers":1
+    },
+    "huahuo":{
+            "sovits_path":"data/huahuo/huahuo_e100_s1100.pth",
+            "gpt_path":"data/huahuo/huahuo-e100.ckpt",
+            "default_refer_path":"data/huahuo/000.wav",
+            "default_refer_text":"哎呀真是的，我又不会真的对她做什么。"
+    },
+    "linghua":{
+        "sovits_path":"data/linghua/shenlilinghua_e15_s2160.pth",
+        "gpt_path":"data/linghua/shenlilinghua.ckpt",
+        "default_refer_path":"data/linghua/000.wav",
+        "default_refer_text":"这里有别于神里家的布景，移步之间，处处都有新奇感。"
+    }
 }

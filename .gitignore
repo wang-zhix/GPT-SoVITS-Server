@@ -161,7 +161,7 @@ cython_debug/
 ffprobe.exe
 
 
-data/models/chinese-*/
-data/models/*.wav
-data/models/*.pth
-data/models/*.ckpt
+data/chinese-*/
+data/*/*.wav
+data/*/*.pth
+data/*/*.ckpt
