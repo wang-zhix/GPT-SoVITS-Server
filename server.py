@@ -1,29 +1,32 @@
-import argparse 
 import os
 import re
-import signal
 import sys
+import signal
+from io import BytesIO
+from time import time as ttime
+import json
 import wave
-from io import BytesIO 
-from time import time as ttime 
 import ffmpeg
-import librosa
+
 import numpy as np
+import librosa
 import soundfile as sf
 import torch
-# import torch_directml
+from transformers import AutoModelForMaskedLM, AutoTokenizer
+
 import uvicorn
-from AR.models.t2s_lightning_module import Text2SemanticLightningModule
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import StreamingResponse
-# from feature_extractor 
-import _lib.cnhubert as cnhubert
-from _lib.mel_processing import spectrogram_torch
-from _lib.models import SynthesizerTrn
-from transformers import AutoModelForMaskedLM, AutoTokenizer 
+
 from text import cleaned_text_to_sequence
 from text.cleaner import clean_text
-import json
+
+from _lib import cnhubert
+from _lib.mel_processing import spectrogram_torch
+from _lib.models import SynthesizerTrn
+
+from AR.models.t2s_lightning_module import Text2SemanticLightningModule
+
 
 # 增加一个读取配置文件的功能
 with open("data/config.json", "r", encoding="utf-8") as f:
@@ -40,21 +43,13 @@ with open("data/config.json", "r", encoding="utf-8") as f:
     port = config["port"]
     workers = config["workers"]
 
-# 自动判断环境是否支持CUDA和DirectML
+# 自动判断环境是否支持CUDA
 if(torch.cuda.is_available()):
     print("CUDA可用，将使用CUDA进行推理加速。")
     print("设备名称:",torch.cuda.get_device_name(0))
     device = "cuda"
 else:
     device = "cpu"
-    # if(torch_directml.is_available()==False):
-    #     device = "cpu"
-    #     print("在本机没有发现可以用于加速的显卡，使用CPU进行推理运算。")
-    # else:
-    #     device = torch_directml.device(0)
-    #     print("DirectML可用，将使用DirectML进行推理加速。")
-    #     print("设备名称:",torch_directml.device_name(0))
-# -----------------------
 
 cnhubert.cnhubert_base_path = cnhubert_path
 tokenizer = AutoTokenizer.from_pretrained(bert_path)
@@ -265,7 +260,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language)
         np.int16
     )
  
-def tts(  text, filename = "", text_language="zh"):  
+def tts(text, filename = "", text_language="zh"):  
     refer_wav_path, prompt_text, prompt_language = (
             default_refer_path,
             default_refer_text,
@@ -287,7 +282,7 @@ def tts(  text, filename = "", text_language="zh"):
 
     
 # refer_wav_path, prompt_text, prompt_language,
-def handle(command,  text, text_language='zh'): 
+def handle(command, text, text_language='zh'): 
     if command == "/restart":
         os.execl('./runtime/python.exe', './runtime/python.exe', *sys.argv)
     elif command == "ping":
@@ -302,7 +297,7 @@ def handle(command,  text, text_language='zh'):
             default_refer_path,
             default_refer_text,
             default_refer_language,
-        ) 
+        )
     with torch.no_grad():
         gen = get_tts_wav(
             refer_wav_path, prompt_text, prompt_language, text, text_language
@@ -320,16 +315,16 @@ def handle(command,  text, text_language='zh'):
 app = FastAPI()
 
 
-@app.post("/")
-async def tts_endpoint(request: Request):
-    json_post_raw = await request.json()
-    return handle( json_post_raw.get("command"),   json_post_raw.get("text"),   )
+# @app.post("/")
+# async def tts_endpoint(request: Request):
+#     json_post_raw = await request.json()
+#     return handle( json_post_raw.get("command"),   json_post_raw.get("text"),   )
 
 
 @app.get("/")
 async def tts_endpoint(command: str = None,text: str = None, ):
     print(command , text )
-    return handle(command,  text  )
+    return handle(command, text)
 
 
 if __name__ == "__main__":

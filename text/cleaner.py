@@ -9,7 +9,7 @@ special = [
 ]
 
 
-def clean_text(text, language):
+def clean_text(text, language = "zh"):
     for special_s, special_l, target_symbol in special:
         if special_s in text and language == special_l:
             return clean_special(text, language, special_s, target_symbol)
