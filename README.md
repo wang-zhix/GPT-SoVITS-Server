@@ -33,16 +33,6 @@ pretrained_models下载地址：https://huggingface.co/lj1995/GPT-SoVITS/tree/ma
 ### 云服务器 或者 自己的安卓手机
 看文章开始的提示，直接看[这里](./On-Termux-Ubuntu.md)
 
-### Docker
-- 1.拉取完代码后，进入项目目录，执行`docker build -t gpt-sovits-server .`
-- 2.将模型文件放在data/models目录下，同时配置data/config.json
-- 3.启动容器`docker run -d -t --name=gpt-tts --gpus all -p 5005:6006 -v data:/home/data gpt-sovits-server python server.py`
-- 其中6006是在config.yaml中设置的端口号，一般是不需要修改的。5005是本机端口，可以根据需要修改。当访问时需要使用5005端口。
-- 4.然后在浏览器中访问`http://公网IP:5005/?command=ping&text=你好`，如果返回`pong`，说明服务正常。
-- 5.由于设置了文件夹映射，所以修改模型文件和配置文件后，只需要重启容器，不需要重新run。
-- 重启容器，执行`docker restart gpt-tts && docker exec -d gpt-tts python server.py`
-
- 
 ## 优化方向
 - 代码的结构重新规整
 - 把原来项目中的日语、英语部分重新融合进来
